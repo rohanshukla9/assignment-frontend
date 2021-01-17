@@ -3,6 +3,10 @@ import {
   POST_CREATE_REQUEST,
   POST_CREATE_RESET,
   POST_CREATE_SUCCESS,
+  POST_DELETE_FAIL,
+  POST_DELETE_REQUEST,
+  POST_DELETE_RESET,
+  POST_DELETE_SUCCESS,
   POST_LIST_FAIL,
   POST_LIST_REQUEST,
   POST_LIST_SUCCESS,
@@ -13,6 +17,7 @@ export const postCreateReducer = (state = {}, action) => {
     case POST_CREATE_REQUEST:
       return {
         loading: true,
+        success: false,
       };
     case POST_CREATE_SUCCESS:
       return {
@@ -26,7 +31,9 @@ export const postCreateReducer = (state = {}, action) => {
         error: action.payload,
       };
     case POST_CREATE_RESET:
-      return {};
+      return {
+        success: false,
+      };
     default:
       return state;
   }
@@ -37,21 +44,45 @@ export const postAuthUserReducer = (state = { posts: [] }, action) => {
     case POST_LIST_REQUEST:
       return {
         loading: true,
+        success: false,
       };
     case POST_LIST_SUCCESS:
       return {
         loading: false,
         posts: action.payload,
+        success: true,
       };
     case POST_LIST_FAIL:
       return {
         loading: false,
         error: action.payload,
       };
-    // case ORDER_AUTH_USER_RESET:
-    //   return {
-    //     orders: [],
-    //   };
+    default:
+      return state;
+  }
+};
+
+export const postAuthDelete = (state = {}, action) => {
+  switch (action.type) {
+    case POST_DELETE_REQUEST:
+      return {
+        loading: true,
+        success: false,
+      };
+    case POST_DELETE_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+      };
+    case POST_DELETE_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    case POST_DELETE_RESET:
+      return {
+        success: false,
+      };
     default:
       return state;
   }

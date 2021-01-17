@@ -1,8 +1,10 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { LinkContainer } from 'react-router-bootstrap';
+import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import { logout } from '../actions/userActions';
-const Navbar = () => {
+
+const Header = () => {
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);
@@ -12,51 +14,44 @@ const Navbar = () => {
     console.log('logout');
     dispatch(logout());
   };
-
   return (
-    <nav className="p-6 bg-white flex justify-between">
-      <ul className="flex items-center">
-        <li>
-          <Link to="/" className="p-3">
-            Home
-          </Link>
-        </li>
-        <li>
-          <Link to="/dashboard" className="p-3">
-            Dashboard
-          </Link>
-        </li>
-      </ul>
-
-      {userInfo ? (
-        <ul className="flex items-center">
-          <li>
-            <Link to="/" className="p-3">
-              Username
-            </Link>
-          </li>
-          <li>
-            <Link to="/" className="p-3" onClick={logoutHandler}>
-              Log out
-            </Link>
-          </li>
-        </ul>
-      ) : (
-        <ul className="flex items-center">
-          <li>
-            <Link to="/login" className="p-3">
-              Login
-            </Link>
-          </li>
-          <li>
-            <Link to="/register" className="p-3">
-              Register
-            </Link>
-          </li>
-        </ul>
-      )}
-    </nav>
+    <header>
+      <Navbar
+        bg="dark"
+        className="nav-container"
+        variant="dark"
+        expand="lg"
+        collapseOnSelect
+      >
+        <Container>
+          <LinkContainer to="/">
+            <Navbar.Brand>Status share</Navbar.Brand>
+          </LinkContainer>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="ml-auto">
+              {userInfo ? (
+                <NavDropdown title={userInfo.data.name} id="username">
+                  <LinkContainer to="/dashboard">
+                    <NavDropdown.Item>Dashboard</NavDropdown.Item>
+                  </LinkContainer>
+                  <NavDropdown.Item onClick={logoutHandler}>
+                    Logout
+                  </NavDropdown.Item>
+                </NavDropdown>
+              ) : (
+                <LinkContainer to="/login">
+                  <Nav.Link>
+                    <i className="fas fa-user"></i> Login
+                  </Nav.Link>
+                </LinkContainer>
+              )}
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+    </header>
   );
 };
 
-export default Navbar;
+export default Header;

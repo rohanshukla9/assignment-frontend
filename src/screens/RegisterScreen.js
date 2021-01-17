@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { Form, Button, Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
-//import Loader from '../components/Loader';
+import Loader from '../components/Loader';
+import FormContainer from '../components/FormContainer';
 import { register } from '../actions/userActions';
 
 const RegisterScreen = ({ location, history }) => {
@@ -36,80 +39,67 @@ const RegisterScreen = ({ location, history }) => {
 
     //dispatch register
   };
-
   return (
-    <div className="w-4/12 bg-white p-6 rounded-lg">
-      <form onSubmit={submitHandler}>
-        {/* {message && <Message>{message}</Message>}
-        {error && <Message>{error}</Message>} */}
+    <FormContainer>
+      <h1>Sign Up</h1>
+      {message && <Message variant="danger">{message}</Message>}
+      {error && <Message variant="danger">{error}</Message>}
+      {loading && <Loader />}
 
-        <div className="mb-4">
-          <label for="name" className="sr-only">
-            Name
-          </label>
-          <input
-            type="text"
-            name="name"
-            id="name"
-            placeholder="Your name"
-            className="bg-gray-100 border-2 w-full p-4 rounded-lg "
+      <Form onSubmit={submitHandler}>
+        <Form.Group controlId="name">
+          <Form.Label>Full Name:</Form.Label>
+          <Form.Control
+            type="name"
+            placeholder="Enter Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-          />
-        </div>
-        <div className="mb-4">
-          <label for="email" className="sr-only">
-            Email
-          </label>
-          <input
-            type="text"
-            name="email"
-            id="email"
-            placeholder="Your email address"
-            className="bg-gray-100 border-2 w-full p-4 rounded-lg "
+          ></Form.Control>
+        </Form.Group>
+
+        <Form.Group controlId="email">
+          <Form.Label>Email Address</Form.Label>
+          <Form.Control
+            type="email"
+            placeholder="Enter Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div className="mb-4">
-          <label for="password" className="sr-only">
-            Password
-          </label>
-          <input
+          ></Form.Control>
+        </Form.Group>
+
+        <Form.Group controlId="password">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
             type="password"
-            name="password"
-            id="password"
-            placeholder="Password"
-            className="bg-gray-100 border-2 w-full p-4 rounded-lg "
+            placeholder="Enter password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <div className="mb-4">
-          <label for="password_confirmation" className="sr-only">
-            Password again
-          </label>
-          <input
+          ></Form.Control>
+        </Form.Group>
+        <Form.Group controlId="confirmPassword">
+          <Form.Label>Confirm Password</Form.Label>
+          <Form.Control
             type="password"
-            name="password_confirmation"
-            id="password_confirmation"
-            placeholder="Password again"
-            className="bg-gray-100 border-2 w-full p-4 rounded-lg"
+            placeholder="Confirm password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-        </div>
+          ></Form.Control>
+        </Form.Group>
 
-        <div>
-          <button
-            type="submit"
-            className="bg-blue-500 text-white px-4 py-3 rounded font-medium w-full"
-          >
-            Register
-          </button>
-        </div>
-      </form>
-    </div>
+        <Button type="submit" variant="primary">
+          Register
+        </Button>
+      </Form>
+
+      <Row className="py-3">
+        <Col>
+          Have An Account?
+          <Link to={redirect ? `/login?redirect=${redirect}` : '/login'}>
+            Login
+          </Link>
+        </Col>
+      </Row>
+    </FormContainer>
   );
 };
 

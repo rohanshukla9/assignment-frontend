@@ -5,6 +5,7 @@ import { userLoginReducer, userRegisterReducer } from './reducers/userReducers';
 import {
   postCreateReducer,
   postAuthUserReducer,
+  postAuthDelete,
 } from './reducers/postReducers';
 
 const reducer = combineReducers({
@@ -12,11 +13,12 @@ const reducer = combineReducers({
   userRegister: userRegisterReducer,
   postCreate: postCreateReducer,
   postAuthUser: postAuthUserReducer,
+  postDelete: postAuthDelete,
 });
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
   ? JSON.parse(localStorage.getItem('userInfo'))
-  : [];
+  : null;
 
 const initialState = {
   userLogin: { userInfo: userInfoFromStorage },

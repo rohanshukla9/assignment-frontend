@@ -3,7 +3,7 @@ const colors = require('tailwindcss/colors');
 module.exports = {
   purge: [],
   presets: [],
-  darkMode: true, // or 'media' or 'class'
+  darkMode: false, // or 'media' or 'class'
   theme: {
     screens: {
       sm: '640px',
@@ -400,6 +400,9 @@ module.exports = {
     }),
     keyframes: {
       spin: {
+        from: {
+          transform: 'rotate(0deg)',
+        },
         to: {
           transform: 'rotate(360deg)',
         },

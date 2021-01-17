@@ -29,9 +29,6 @@ export const login = (email, password) => async (dispatch) => {
       },
       config
     );
-    // const mapper = data.forEach((element) => {
-    //   console.log(element.meta.access_token);
-    // });
 
     dispatch({
       type: USER_LOGIN_SUCCESS,
@@ -43,8 +40,8 @@ export const login = (email, password) => async (dispatch) => {
     dispatch({
       type: USER_LOGIN_FAIL,
       payload:
-        error.response && error.response.message
-          ? error.response.message
+        error.response && error.response.data.message
+          ? error.response.data.message
           : error.message,
     });
   }
